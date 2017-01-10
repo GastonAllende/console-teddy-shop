@@ -43,15 +43,17 @@ namespace Teddyshop
 
 /*
 
-     List<Product> lager = new List<Product>();
+    MAKE A PRODUCT AND STORE IT IN THE STORAGE
+
+     List<Product> storage = new List<Product>();
 
             try
             {
 
                 Product spidermanTeddy = new Product(333, "spiderman teddy", 22, 12);
                 Product hulkTeddy = new Product(333, "hulk teddy", 22, 12);
-                lager.Add(spidermanTeddy);
-                lager.Add(hulkTeddy);
+                storage.Add(spidermanTeddy);
+                storage.Add(hulkTeddy);
 
 
                 Console.WriteLine("Name of the product: ");
@@ -67,7 +69,7 @@ namespace Teddyshop
                 int productQuantityInt = Int32.Parse(Console.ReadLine());
 
                 Product newProduct = new Product(productSkuInt, productName, productPriceInt, productQuantityInt);
-                lager.Add(newProduct);
+                storage.Add(newProduct);
 
             }
             catch (FormatException)
@@ -77,10 +79,42 @@ namespace Teddyshop
             }
 
 
-            foreach (Product item in lager)
+            foreach (Product item in storage)
             {
                 Console.WriteLine(item.ToString());
             }
+
+
+
+*/
+
+
+
+
+/*
+
+
+ CHANGE THE PRICE OF A PRODUCT IN STORAGE
+
+
+        Console.WriteLine("Write sku-nr of the product you want to change the price");
+        int skuInput = Int32.Parse(Console.ReadLine());
+        Console.WriteLine("Write the new price");
+        int newPrice = Int32.Parse(Console.ReadLine());
+
+
+        foreach (Product item in storage)
+        {
+            if (item.Sku == skuInput)
+            {
+                Console.WriteLine("Find it");
+                item.Price = newPrice; 
+            }
+        }
+
+
+
+
 
 
 
