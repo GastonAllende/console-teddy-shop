@@ -21,3 +21,8 @@ C:\Users\Gustav\Desktop\Teddyshop\Lernia\Teddyshop\bin\Debug\Teddyshop.exe.confi
 C:\Users\Gustav\Desktop\Teddyshop\Lernia\Teddyshop\obj\Debug\Teddyshop.exe
 C:\Users\Gustav\Desktop\Teddyshop\Lernia\Teddyshop\obj\Debug\Teddyshop.pdb
 >>>>>>> 76d649f21b07c98cde4eb75742de60c0ba49506b
+C:\Users\Gustav\Desktop\Teddyshop\Lernia\Teddyshop\bin\Debug\Teddyshop.exe
+C:\Users\Gustav\Desktop\Teddyshop\Lernia\Teddyshop\bin\Debug\Teddyshop.pdb
+C:\Users\Gustav\Desktop\Teddyshop\Lernia\Teddyshop\bin\Debug\Newtonsoft.Json.dll
+C:\Users\Gustav\Desktop\Teddyshop\Lernia\Teddyshop\bin\Debug\Newtonsoft.Json.xml
+C:\Users\Gustav\Desktop\Teddyshop\Lernia\Teddyshop\obj\Debug\Teddyshop.csprojResolveAssemblyReference.cache
