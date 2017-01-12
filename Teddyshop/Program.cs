@@ -13,7 +13,8 @@ namespace Teddyshop
         {
             BusinessSystemClass<CustomerClass> BusinessSystem = new BusinessSystemClass<CustomerClass>();
             BusinessSystem.InitiateCustomerBase();
-            Console.ReadLine();
+            BusinessSystem.initiateProducts();
+            BusinessSystem.placeCustomerOrder();
 
         }
 

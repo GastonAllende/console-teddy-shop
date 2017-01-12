@@ -1,6 +1,6 @@
 ﻿namespace Teddyshop
 {
-   class CustomerClass
+   public class CustomerClass
     {
         public string CustomerNo { get; set; }
         public string FirstName { get; set; }
