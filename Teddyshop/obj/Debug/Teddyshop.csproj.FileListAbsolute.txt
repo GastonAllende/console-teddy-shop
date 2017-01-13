@@ -1,28 +1,8 @@
-c:\users\admin\documents\visual studio 2015\Projects\Teddyshop\Teddyshop\bin\Debug\Teddyshop.exe.config
-C:\Users\Gustav\Desktop\Teddyshop\Teddyshop\bin\Debug\Teddyshop.exe.config
-C:\Users\Gustav\Desktop\Teddyshop\Teddyshop\bin\Debug\Teddyshop.exe
-C:\Users\Gustav\Desktop\Teddyshop\Teddyshop\bin\Debug\Teddyshop.pdb
-C:\Users\Gustav\Desktop\Teddyshop\Teddyshop\obj\Debug\Teddyshop.csprojResolveAssemblyReference.cache
-C:\Users\Gustav\Desktop\Teddyshop\Teddyshop\obj\Debug\Teddyshop.exe
-C:\Users\Gustav\Desktop\Teddyshop\Teddyshop\obj\Debug\Teddyshop.pdb
-C:\Users\Gustav\Desktop\Teddyshop\Teddyshop\bin\Debug\Newtonsoft.Json.dll
-C:\Users\Gustav\Desktop\Teddyshop\Teddyshop\bin\Debug\Newtonsoft.Json.xml
-<<<<<<< HEAD
-C:\Users\Admin\Desktop\Lernia\Teddyshop\bin\Debug\Teddyshop.exe.config
-C:\Users\Admin\Desktop\Lernia\Teddyshop\obj\Debug\Teddyshop.exe
-C:\Users\Admin\Desktop\Lernia\Teddyshop\obj\Debug\Teddyshop.pdb
-C:\Users\Admin\Desktop\Lernia\Teddyshop\bin\Debug\Teddyshop.exe
-C:\Users\Admin\Desktop\Lernia\Teddyshop\bin\Debug\Teddyshop.pdb
-C:\Users\Admin\Desktop\Lernia\Teddyshop\bin\Debug\Newtonsoft.Json.dll
-C:\Users\Admin\Desktop\Lernia\Teddyshop\bin\Debug\Newtonsoft.Json.xml
-C:\Users\Admin\Desktop\Lernia\Teddyshop\obj\Debug\Teddyshop.csprojResolveAssemblyReference.cache
-=======
 C:\Users\Gustav\Desktop\Teddyshop\Lernia\Teddyshop\bin\Debug\Teddyshop.exe.config
-C:\Users\Gustav\Desktop\Teddyshop\Lernia\Teddyshop\obj\Debug\Teddyshop.exe
-C:\Users\Gustav\Desktop\Teddyshop\Lernia\Teddyshop\obj\Debug\Teddyshop.pdb
->>>>>>> 76d649f21b07c98cde4eb75742de60c0ba49506b
 C:\Users\Gustav\Desktop\Teddyshop\Lernia\Teddyshop\bin\Debug\Teddyshop.exe
 C:\Users\Gustav\Desktop\Teddyshop\Lernia\Teddyshop\bin\Debug\Teddyshop.pdb
 C:\Users\Gustav\Desktop\Teddyshop\Lernia\Teddyshop\bin\Debug\Newtonsoft.Json.dll
 C:\Users\Gustav\Desktop\Teddyshop\Lernia\Teddyshop\bin\Debug\Newtonsoft.Json.xml
+C:\Users\Gustav\Desktop\Teddyshop\Lernia\Teddyshop\obj\Debug\Teddyshop.exe
+C:\Users\Gustav\Desktop\Teddyshop\Lernia\Teddyshop\obj\Debug\Teddyshop.pdb
 C:\Users\Gustav\Desktop\Teddyshop\Lernia\Teddyshop\obj\Debug\Teddyshop.csprojResolveAssemblyReference.cache

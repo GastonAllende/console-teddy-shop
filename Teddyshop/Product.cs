@@ -6,10 +6,10 @@ using System.Threading.Tasks;
 
 namespace Teddyshop
 {
-    public class Product
+     public  class Product
     {
         //  Properties             
-        public int Sku { get; set; }
+        public string Sku { get; set; }
         public string ItemName { get; set; }
         public int Price { get; set; }
         public int Quantity { get; set; }
@@ -23,19 +23,19 @@ namespace Teddyshop
             @param int quantity - item quantity
             
         */
-        public Product(int sku, string itemName, int price, int quantity)
+        public Product(string sku, string itemName, int price, int quantity)
         {
-            Sku = sku;
-            ItemName = itemName;
-            Price = price;
-            Quantity = quantity;
+            this.Sku = sku;
+            this.ItemName = itemName;
+            this.Price = price;
+            this.Quantity = quantity;
         }
 
-        public override string ToString()
+    /*    public override string ToString()
         {
             return "Product Sku: " + Sku + ", Name: " + ItemName;
         }
-
+        */
     }
 
 }
