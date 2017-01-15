@@ -196,7 +196,7 @@ namespace Teddyshop
 
         static void Write(IEnumerator<CustomerClass> e)
         {
-            while (e.MoveNext()) //initiating enumerator to print all the vehicles in garage. MoveNext is a built in function that iterates the results.
+            while (e.MoveNext()) 
             {
                 CustomerClass value = e.Current;
                 Console.WriteLine(value.FirstName);
@@ -210,7 +210,7 @@ namespace Teddyshop
 
         static void WriteProduct(IEnumerator<Product> e)
         {
-            while (e.MoveNext()) //initiating enumerator to print all the vehicles in garage. MoveNext is a built in function that iterates the results.
+            while (e.MoveNext()) 
             {
                 Product value = e.Current;
                 Console.WriteLine(value.ItemName);
