@@ -9,10 +9,6 @@ using Newtonsoft.Json.Linq;
 
 namespace Teddyshop
 {
-
-  
-
-
 /*
 
     MAKE A PRODUCT AND STORE IT IN THE STORAGE
@@ -97,13 +93,16 @@ namespace Teddyshop
         public void Run()
         {
             BusinessSystem = new BusinessSystemClass<CustomerClass>();
+            BusinessSystem.InitiateCustomerBase();
+            BusinessSystem.initiateProducts();
             while (true)
             {
                 Console.Clear();
                 Console.WriteLine("[A] Add new product");
                 Console.WriteLine("[P] Change price for one product");
+                Console.WriteLine("[B] Show all registered byers in system");
                 Console.WriteLine("[S] Storage - Change number of products in storage");
-                Console.WriteLine("[R] Registrate a new customer (name, adress)"); //registerNewCustomer()
+                Console.WriteLine("[R] Register a new customer (name, adress)"); //registerNewCustomer()
                 Console.WriteLine("[N] Add a new order for a customer");
                 Console.WriteLine("[C] Change a current order (amount of products)");
                 Console.WriteLine("[O] Show all orders for a customer");
@@ -115,6 +114,7 @@ namespace Teddyshop
                     case "A":
                         // call the method addNewProduct
                         //addNewProduct();
+                       
                         break;
                     case "P":
                         // call the method changePriceProduct()
@@ -131,6 +131,12 @@ namespace Teddyshop
                     case "N":
                         // call the method addNewOrderCustomer()
                         //addNewOrderCustomer();
+                        BusinessSystem.placeCustomerOrder();
+                        break;
+                    case "B":
+                        // call the method addNewOrderCustomer()
+                        //addNewOrderCustomer();
+                        BusinessSystem.customersInSystem();
                         break;
                     case "C":
                         // call the method changeCurrentOrder()
