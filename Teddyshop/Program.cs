@@ -1,164 +1,104 @@
-﻿
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
-using System;
-using System.Collections.Generic;
 using System.Net.Http;
 using Newtonsoft.Json.Linq;
+using System.Threading.Tasks;
 
 namespace Teddyshop
 {
-
-  
-
-
-/*
-
-    MAKE A PRODUCT AND STORE IT IN THE STORAGE
-
-     List<Product> storage = new List<Product>();
-
-            try
-            {
-
-                Product spidermanTeddy = new Product(333, "spiderman teddy", 22, 12);
-                Product hulkTeddy = new Product(333, "hulk teddy", 22, 12);
-                storage.Add(spidermanTeddy);
-                storage.Add(hulkTeddy);
-
-
-                Console.WriteLine("Name of the product: ");
-                string productName = Console.ReadLine();
-
-                Console.WriteLine("Sku of the product: ");
-                int productSkuInt = Int32.Parse(Console.ReadLine());
-
-                Console.WriteLine("Price of the product: ");
-                int productPriceInt = Int32.Parse(Console.ReadLine());
-
-                Console.WriteLine("How many products: ");
-                int productQuantityInt = Int32.Parse(Console.ReadLine());
-
-                Product newProduct = new Product(productSkuInt, productName, productPriceInt, productQuantityInt);
-                storage.Add(newProduct);
-
-            }
-            catch (FormatException)
-            {
-                Console.WriteLine("Bad Format");
-               // System.Console.ReadKey();
-            }
-
-
-            foreach (Product item in storage)
-            {
-                Console.WriteLine(item.ToString());
-            }
-
-*/
-
-
-/*
- CHANGE THE PRICE OF A PRODUCT IN STORAGE
-
-
-        Console.WriteLine("Write sku-nr of the product you want to change the price");
-        int skuInput = Int32.Parse(Console.ReadLine());
-        Console.WriteLine("Write the new price");
-        int newPrice = Int32.Parse(Console.ReadLine());
-
-
-        foreach (Product item in storage)
-        {
-            if (item.Sku == skuInput)
-            {
-                Console.WriteLine("Find it");
-                item.Price = newPrice; 
-            }
-        }
-*/
-
     class Program
     {
+        
         static void Main(string[] args)
         {
+            
+            //Console.ReadLine();
             MainProg prog = new MainProg();
             prog.Run();
         }
     }
 
- 
-    
 
-    public class MainProg
+    class MainProg
     {
-        private BusinessSystemClass<CustomerClass> BusinessSystem;
+        public BusinessSystemClass<CustomerClass> BusinessSystem; //Deklareread för åtkomst för alla klasser
         public void Run()
         {
             BusinessSystem = new BusinessSystemClass<CustomerClass>();
-            while (true)
+            BusinessSystem.InitiateCustomerBase();
+            string input;
+
+            do
             {
                 Console.Clear();
-                Console.WriteLine("[A] Add new product");
-                Console.WriteLine("[P] Change price for one product");
-                Console.WriteLine("[S] Storage - Change number of products in storage");
-                Console.WriteLine("[R] Registrate a new customer (name, adress)"); //registerNewCustomer()
-                Console.WriteLine("[N] Add a new order for a customer");
-                Console.WriteLine("[C] Change a current order (amount of products)");
-                Console.WriteLine("[O] Show all orders for a customer");
-                Console.WriteLine("[Q] Quit (cancel) a order");
-                Console.WriteLine("[X] Exit program");
-                ConsoleKeyInfo key = Console.ReadKey();
-                switch (key.Key.ToString().ToUpper())
+                Console.WriteLine("[1] Add new product");
+                Console.WriteLine("[2] Change price for one product");  //product()
+                Console.WriteLine("[3] Storage - Change number of products in storage");
+                Console.WriteLine("[4] Registrate a new customer (name, adress)"); //registerNewCustomer()
+                Console.WriteLine("[5] Add a new order for a customer");
+                Console.WriteLine("[6] Change a current order (amount of products)");
+                Console.WriteLine("[7] Show all orders for a customer");
+                Console.WriteLine("[8] Quit (cancel) a order");
+                Console.WriteLine("[9] Exit program");
+
+                input = Console.ReadLine();
+
+                //ConsoleKeyInfo key = Console.ReadKey();
+
+                //switch (key.Key.ToString().ToUpper())
+                switch(input)
                 {
-                    case "A":
+                    case "1":
                         // call the method addNewProduct
                         //addNewProduct();
                         break;
-                    case "P":
+
+                    case "2":
                         // call the method changePriceProduct()
                         //changePriceProduct();
                         break;
-                    case "S":
+
+                    case "3":
                         // call the method changeNumberOfProducts()
                         //changeNumberOfProducts();
                         break;
-                    case "R":
+
+                    case "4":
                         // call the method registerNewCustomer()
                         BusinessSystem.registerNewCustomer();
                         break;
-                    case "N":
+
+                    case "5":
                         // call the method addNewOrderCustomer()
                         //addNewOrderCustomer();
                         break;
-                    case "C":
+
+                    case "6":
                         // call the method changeCurrentOrder()
                         //changeCurrentOrder();
                         break;
-                    case "O":
+
+                    case "7":
                         // call the method showAllOrdersCustomer()
                         //showAllOrdersCustomer;
                         break;
-                    case "Q":
+
+                    case "8":
                         // call the method cancelOrder()
                         //cancelOrder();
                         break;
-                    case "X":
+
+                    case "9":
                         // Exit program
                         return;
+
                     default:
                         // I dont care what the user choose...
                         break;
                 }
-            }
+            } while (!input.Equals("0"));
         }
     }
 }
-
-
-
-
-
-   
-   
