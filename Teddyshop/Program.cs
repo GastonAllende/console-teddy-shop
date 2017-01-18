@@ -28,6 +28,7 @@ namespace Teddyshop
         {
             BusinessSystem = new BusinessSystemClass<CustomerClass>();
             BusinessSystem.InitiateCustomerBase();
+            BusinessSystem.initiateProducts();
             string input;
 
             do
@@ -36,12 +37,13 @@ namespace Teddyshop
                 Console.WriteLine("[1] Add new product");
                 Console.WriteLine("[2] Change price for one product");  //product()
                 Console.WriteLine("[3] Storage - Change number of products in storage");
-                Console.WriteLine("[4] Registrate a new customer (name, adress)"); //registerNewCustomer()
+                Console.WriteLine("[4] Register a new customer (name, adress)"); //registerNewCustomer()
                 Console.WriteLine("[5] Add a new order for a customer");
                 Console.WriteLine("[6] Change a current order (amount of products)");
                 Console.WriteLine("[7] Show all orders for a customer");
-                Console.WriteLine("[8] Quit (cancel) a order");
-                Console.WriteLine("[9] Exit program");
+                Console.WriteLine("[8] Show all customers in system");
+                Console.WriteLine("[9] Quit (cancel) a order");
+                Console.WriteLine("[10] Exit program");
 
                 input = Console.ReadLine();
 
@@ -73,24 +75,32 @@ namespace Teddyshop
                     case "5":
                         // call the method addNewOrderCustomer()
                         //addNewOrderCustomer();
+                        BusinessSystem.placeCustomerOrder();
                         break;
 
                     case "6":
                         // call the method changeCurrentOrder()
                         //changeCurrentOrder();
+                        BusinessSystem.removePlacedOrder();
                         break;
 
                     case "7":
                         // call the method showAllOrdersCustomer()
                         //showAllOrdersCustomer;
+                        BusinessSystem.viewCustomerOrder();
                         break;
 
                     case "8":
+                        BusinessSystem.customersInSystem();
+                        break;
+
+                    case "9":
                         // call the method cancelOrder()
                         //cancelOrder();
                         break;
 
-                    case "9":
+
+                    case "10":
                         // Exit program
                         return;
 
