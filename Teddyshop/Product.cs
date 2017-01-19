@@ -31,11 +31,11 @@ namespace Teddyshop
             this.Quantity = quantity;
         }
 
-    /*    public override string ToString()
-        {
-            return "Product Sku: " + Sku + ", Name: " + ItemName;
-        }
-        */
+          public override string ToString()
+            {
+                return "Product Sku: " + Sku + ", Name: " + ItemName + " Product price: " + Price + ", Quantity : " + Quantity;
+            }
+            
     }
 
 }

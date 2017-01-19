@@ -54,17 +54,17 @@ namespace Teddyshop
                 {
                     case "1":
                         // call the method addNewProduct
-                        //addNewProduct();
+                        BusinessSystem.addNewProduct();
                         break;
 
                     case "2":
                         // call the method changePriceProduct()
-                        //changePriceProduct();
+                        BusinessSystem.changePriceProduct();
                         break;
 
                     case "3":
                         // call the method changeNumberOfProducts()
-                        //changeNumberOfProducts();
+                        BusinessSystem.changeNumberOfProducts();
                         break;
 
                     case "4":
