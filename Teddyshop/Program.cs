@@ -97,6 +97,7 @@ namespace Teddyshop
                     case "9":
                         // call the method cancelOrder()
                         //cancelOrder();
+                        BusinessSystem.removePlacedOrder();
                         break;
 
 
