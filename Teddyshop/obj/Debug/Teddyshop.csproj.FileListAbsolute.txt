@@ -14,3 +14,11 @@ C:\Users\gusegn\Source\Repos\Lernia\Teddyshop\bin\Debug\Newtonsoft.Json.xml
 C:\Users\gusegn\Source\Repos\Lernia\Teddyshop\obj\Debug\Teddyshop.csprojResolveAssemblyReference.cache
 C:\Users\gusegn\Source\Repos\Lernia\Teddyshop\obj\Debug\Teddyshop.exe
 C:\Users\gusegn\Source\Repos\Lernia\Teddyshop\obj\Debug\Teddyshop.pdb
+C:\Users\Admin\Desktop\Lernia-test\Lernia\Teddyshop\bin\Debug\Teddyshop.exe.config
+C:\Users\Admin\Desktop\Lernia-test\Lernia\Teddyshop\obj\Debug\Teddyshop.exe
+C:\Users\Admin\Desktop\Lernia-test\Lernia\Teddyshop\obj\Debug\Teddyshop.pdb
+C:\Users\Admin\Desktop\Lernia-test\Lernia\Teddyshop\bin\Debug\Teddyshop.exe
+C:\Users\Admin\Desktop\Lernia-test\Lernia\Teddyshop\bin\Debug\Teddyshop.pdb
+C:\Users\Admin\Desktop\Lernia-test\Lernia\Teddyshop\bin\Debug\Newtonsoft.Json.dll
+C:\Users\Admin\Desktop\Lernia-test\Lernia\Teddyshop\bin\Debug\Newtonsoft.Json.xml
+C:\Users\Admin\Desktop\Lernia-test\Lernia\Teddyshop\obj\Debug\Teddyshop.csprojResolveAssemblyReference.cache

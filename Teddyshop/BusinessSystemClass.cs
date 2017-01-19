@@ -272,41 +272,6 @@ namespace Teddyshop
             }
 
         }
-        /*     public void registerAProduct()
-             {
-
-
-                 try
-                 {
-                     Console.WriteLine("Name of the product: ");
-                     string productName = Console.ReadLine();
-
-                     Console.WriteLine("Sku of the product: ");
-                     int productSkuInt = Int32.Parse(Console.ReadLine());
-
-                     Console.WriteLine("Price of the product: ");
-                     int productPriceInt = Int32.Parse(Console.ReadLine());
-
-                     Console.WriteLine("How many products: ");
-                     int productQuantityInt = Int32.Parse(Console.ReadLine());
-
-                     Product newProduct = new Product(productSkuInt, productName, productPriceInt, productQuantityInt);
-                     storage.Add(newProduct);
-
-                 }
-                 catch (FormatException)
-                 {
-                     Console.WriteLine("Bad Format");
-                     // System.Console.ReadKey();
-                 }
-
-
-                 foreach (Product item in storage)
-                 {
-                     Console.WriteLine(item.ToString());
-                 }
-
-             } */
         public void initiateProducts()
         {
 
@@ -321,6 +286,113 @@ namespace Teddyshop
 
             Console.WriteLine("added");
         }
+
+        public void addNewProduct()
+        {
+            bool continueAdd = true;
+            do
+            {
+                try
+                {
+                    Console.WriteLine("Name of the product: ");
+                    string productName = Console.ReadLine();
+
+                    Console.WriteLine("Sku of the product: ");
+                    int productSkuInt = Int32.Parse(Console.ReadLine());
+
+                    Console.WriteLine("Price of the product: ");
+                    int productPriceInt = Int32.Parse(Console.ReadLine());
+
+                    Console.WriteLine("How many products: ");
+                    int productQuantityInt = Int32.Parse(Console.ReadLine());
+
+                    Product newProduct = new Product(productSkuInt, productName, productPriceInt, productQuantityInt);
+                    storage.Add(newProduct);
+
+                    Console.WriteLine("Do you want to add another product - Y/N");
+                    string answer = Console.ReadLine();
+
+                    if (answer.ToUpper() == "Y")
+                    {
+                        continueAdd = true;
+                    }
+                    else if (answer.ToUpper() == "N")
+                    {
+                        continueAdd = false;
+                    }
+
+
+                }
+                catch (FormatException)
+                {
+                    Console.WriteLine("Bad Format try again");
+                    continueAdd = true;
+                    // System.Console.ReadKey();
+                }
+
+            } while (continueAdd);
+
+        }
+        public void changePriceProduct()
+        {
+
+            foreach (Product item in storage)
+            {
+                Console.WriteLine(item.ToString());
+            }
+
+            try
+            {
+                Console.WriteLine("Write sku-nr of the product you want to change the price");
+                int skuInput = Int32.Parse(Console.ReadLine());
+                Console.WriteLine("Write the new price");
+                int newPrice = Int32.Parse(Console.ReadLine());
+
+
+                foreach (Product item in storage)
+                {
+                    if (item.Sku == skuInput)
+                    {
+                        item.Price = newPrice;
+                        Console.WriteLine("Change the price of " + item.ItemName + " With SKU-nr " + item.Sku);
+                    }
+                }
+            }
+            catch (FormatException)
+            {
+                Console.WriteLine("Fel Format");
+            }
+        }
+        public void changeNumberOfProducts()
+        {
+            foreach (Product item in storage)
+            {
+                Console.WriteLine(item.ToString());
+            }
+
+            try
+            {
+
+                Console.WriteLine("Write sku-nr of the product you want to change the quantity");
+                int skuInput = Int32.Parse(Console.ReadLine());
+                Console.WriteLine("Write the quantity for that product");
+                int newQuantity = Int32.Parse(Console.ReadLine());
+
+                foreach (Product item in storage)
+                {
+                    if (item.Sku == skuInput)
+                    {
+                        item.Quantity = newQuantity;
+                        Console.WriteLine("Change the quantity of " + item.ItemName + " With SKU-nr " + item.Sku);
+                    }
+                }
+            }
+            catch (FormatException)
+            {
+                Console.WriteLine("Fel Format");
+            }
+        }
+
 
         static void Write(IEnumerator<CustomerClass> e)
         {
