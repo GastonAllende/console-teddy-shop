@@ -9,8 +9,8 @@ namespace Teddyshop
 
         public class Order
         {
-            public String skuOrder { get; set; }
-            public String customerId { get; set; }
+            public int skuOrder { get; set; }
+            public string customerId { get; set; }
             public int Quantity { get; set; }
 
         public void transaction()

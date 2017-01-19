@@ -9,7 +9,7 @@ namespace Teddyshop
      public  class Product
     {
         //  Properties             
-        public string Sku { get; set; }
+        public int Sku { get; set; }
         public string ItemName { get; set; }
         public int Price { get; set; }
         public int Quantity { get; set; }
@@ -23,7 +23,7 @@ namespace Teddyshop
             @param int quantity - item quantity
             
         */
-        public Product(string sku, string itemName, int price, int quantity)
+        public Product(int sku, string itemName, int price, int quantity)
         {
             this.Sku = sku;
             this.ItemName = itemName;

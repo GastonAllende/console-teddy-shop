@@ -7,7 +7,7 @@
         public string LastName { get; set; }
         public string SSN { get; set; }
         public string HomeAddress { get; set; }
-        public string HomeZipCode { get; set; }
+        public int HomeZipCode { get; set; }
 
 
 
