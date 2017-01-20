@@ -10,8 +10,7 @@ namespace Teddyshop
     public class Order
         {
 
-        List<Product> productsInOrder = new List<Product>();
-
+ 
         public int skuOrder { get; set; }
         public string customerId { get; set; }
         public int Quantity { get; set; }
