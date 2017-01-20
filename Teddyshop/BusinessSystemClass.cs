@@ -33,21 +33,7 @@ namespace Teddyshop
             }
 
         }
-<<<<<<< HEAD
         public void initiateProducts()
-=======
-
-        public void customersInSystem()
-        {
-
-            List<CustomerClass>.Enumerator e = listCustomers.GetEnumerator(); 
-            Write(e);
-            Console.WriteLine("Press any key to return to menu");
-            Console.ReadLine();
-
-        }
-        public void removePlacedOrder()
->>>>>>> e08f9c13161f5ba4a50963da1621e309efa84de9
         {
 
             Product spidermanTeddy = new Product(111, "spiderman teddy", 22, 12);
