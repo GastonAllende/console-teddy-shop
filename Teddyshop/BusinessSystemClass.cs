@@ -6,7 +6,7 @@ using System.Linq;
 
 namespace Teddyshop
 {
-    class BusinessSystemClass<T> where T : CustomerClass
+    public class BusinessSystemClass
     {
         List<CustomerClass> listCustomers = new List<CustomerClass>();
         List<Order> orderList = new List<Order>();
@@ -284,9 +284,7 @@ namespace Teddyshop
             catch (FormatException)
             {
                 Console.WriteLine("Bad Format");
-                // System.Console.ReadKey();
             }
-
 
         }
 
@@ -336,6 +334,7 @@ namespace Teddyshop
             } while (continueAdd);
 
         }
+
         public void changePriceProduct()
         {
 
@@ -366,6 +365,8 @@ namespace Teddyshop
                 Console.WriteLine("Fel Format");
             }
         }
+
+
         public void changeNumberOfProducts()
         {
             foreach (Product item in storage)
