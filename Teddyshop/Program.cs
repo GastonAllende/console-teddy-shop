@@ -12,8 +12,7 @@ namespace Teddyshop
     {
         
         static void Main(string[] args)
-        {
-            
+        {         
             //Console.ReadLine();
             MainProg prog = new MainProg();
             prog.Run();

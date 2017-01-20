@@ -7,22 +7,24 @@ using System.Threading.Tasks;
 namespace Teddyshop
 {
 
-        public class Order
+    public class Order
         {
-            public int skuOrder { get; set; }
-            public string customerId { get; set; }
-            public int Quantity { get; set; }
+
+        List<Product> productsInOrder = new List<Product>();
+
+        public int skuOrder { get; set; }
+        public string customerId { get; set; }
+        public int Quantity { get; set; }
 
         public void transaction()
-            {
-                this.skuOrder = skuOrder;
-                this.customerId = customerId;
-                this.Quantity = Quantity;
+
+        {
+            this.skuOrder = skuOrder;
+            this.customerId = customerId;        
+            this.Quantity = Quantity;
+        }
+
     }
-
-          
-
-            }
         
  
 }
