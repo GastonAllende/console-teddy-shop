@@ -8,12 +8,14 @@ namespace Teddyshop
 {
      public  class Product
     {
+
+        static int countProduct = 100;
+
         //  Properties             
         public int Sku { get; set; }
         public string ItemName { get; set; }
         public int Price { get; set; }
         public int Quantity { get; set; }
-
 
         /*
             Constructor() 
@@ -23,9 +25,11 @@ namespace Teddyshop
             @param int quantity - item quantity
             
         */
-        public Product(int sku, string itemName, int price, int quantity)
+
+        public Product(string itemName, int price, int quantity)
         {
-            this.Sku = sku;
+            countProduct++;
+            this.Sku = countProduct;
             this.ItemName = itemName;
             this.Price = price;
             this.Quantity = quantity;
@@ -39,83 +43,3 @@ namespace Teddyshop
     }
 
 }
-
-
-/*
-
-    MAKE A PRODUCT AND STORE IT IN THE STORAGE
-
-     List<Product> storage = new List<Product>();
-
-            try
-            {
-
-                Product spidermanTeddy = new Product(333, "spiderman teddy", 22, 12);
-                Product hulkTeddy = new Product(333, "hulk teddy", 22, 12);
-                storage.Add(spidermanTeddy);
-                storage.Add(hulkTeddy);
-
-
-                Console.WriteLine("Name of the product: ");
-                string productName = Console.ReadLine();
-
-                Console.WriteLine("Sku of the product: ");
-                int productSkuInt = Int32.Parse(Console.ReadLine());
-
-                Console.WriteLine("Price of the product: ");
-                int productPriceInt = Int32.Parse(Console.ReadLine());
-
-                Console.WriteLine("How many products: ");
-                int productQuantityInt = Int32.Parse(Console.ReadLine());
-
-                Product newProduct = new Product(productSkuInt, productName, productPriceInt, productQuantityInt);
-                storage.Add(newProduct);
-
-            }
-            catch (FormatException)
-            {
-                Console.WriteLine("Bad Format");
-               // System.Console.ReadKey();
-            }
-
-
-            foreach (Product item in storage)
-            {
-                Console.WriteLine(item.ToString());
-            }
-
-
-
-*/
-
-
-
-
-/*
-
-
- CHANGE THE PRICE OF A PRODUCT IN STORAGE
-
-
-        Console.WriteLine("Write sku-nr of the product you want to change the price");
-        int skuInput = Int32.Parse(Console.ReadLine());
-        Console.WriteLine("Write the new price");
-        int newPrice = Int32.Parse(Console.ReadLine());
-
-
-        foreach (Product item in storage)
-        {
-            if (item.Sku == skuInput)
-            {
-                Console.WriteLine("Find it");
-                item.Price = newPrice; 
-            }
-        }
-
-
-
-
-
-
-
-*/

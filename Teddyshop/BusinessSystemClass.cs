@@ -6,7 +6,7 @@ using System.Linq;
 
 namespace Teddyshop
 {
-    class BusinessSystemClass<T> where T : CustomerClass
+    public class BusinessSystemClass
     {
         List<CustomerClass> listCustomers = new List<CustomerClass>();
         List<Order> orderList = new List<Order>();
@@ -33,96 +33,21 @@ namespace Teddyshop
             }
 
         }
-
-        public void customersInSystem() //Will loop through all the existing customers by calling the method "Write" 
+        public void initiateProducts()
         {
 
-            List<CustomerClass>.Enumerator e = listCustomers.GetEnumerator(); 
-            Write(e);
-            Console.WriteLine("Press any key to return to menu");
-            Console.ReadLine();
+            Product spidermanTeddy = new Product("spiderman teddy", 22, 12);
+            storage.Add(spidermanTeddy);
 
+            Product hulkTeddy = new Product("hulk teddy", 22, 12);
+            storage.Add(hulkTeddy);
+
+            Product batman = new Product("Batman collectable", 220, 4);
+            storage.Add(batman);
+
+            Console.WriteLine("added");
         }
-        public void removePlacedOrder() //will ask the user for a customerid, and then show the current orders for that customer
-        {
-            Console.WriteLine("Please provide us the following details");
-            Console.Write("Customer number: ");
-            string searchcustomer = Console.ReadLine(); 
 
-            List<Order> viewCustomerOrder = orderList.FindAll(x => x.customerId == searchcustomer); 
-            
-            if(viewCustomerOrder.Count > 0)
-            { 
-            foreach (Order list in viewCustomerOrder) //View customer orders
-            {
-                Console.WriteLine("Customer with number: {0} have ordered {1} items of {2}", list.customerId, list.Quantity, list.skuOrder);
-            }
-
-            Console.WriteLine("\nSelect the item to change your order");
-
-                try
-                {
-
-                    Console.Write("Item number: ");
-                    int selectItemNumber = Convert.ToInt32(Console.ReadLine());
-                    Order changeCustomerOrder = orderList.Find(x => x.customerId == searchcustomer && x.skuOrder == selectItemNumber);
-                    //Find the first order that matches the users inputed value using "Find"
-                    Product removePlacedOrder = storage.Find(x => x.Sku == selectItemNumber);
-                    if (changeCustomerOrder.Quantity > 0)
-                    {
-
-
-                        Console.WriteLine("Would you like to cancel the entire order or just change the quantity?, which is now: {0}: ", changeCustomerOrder.Quantity);
-                        Console.Write("Quantity to remove from order: ");
-                        int selectQuantity = Int32.Parse(Console.ReadLine());
-
-
-                        if (Convert.ToInt32(selectQuantity) <= changeCustomerOrder.Quantity)
-                        {
-                            removePlacedOrder.Quantity = removePlacedOrder.Quantity + Convert.ToInt32(selectQuantity);
-                            changeCustomerOrder.Quantity = changeCustomerOrder.Quantity - selectQuantity;
-
-                            //Take back the orders and update the storage list
-                            if (changeCustomerOrder.Quantity == 0)
-                            {
-                                orderList.RemoveAll(x => x.skuOrder == selectItemNumber && x.customerId == searchcustomer);
-                                //if the whole order was removed, remove customer from orderlist
-
-                                Console.WriteLine("The whole order was successfully removed");
-                            }
-                            else if (changeCustomerOrder.Quantity > 0)
-                            {
-                                Console.WriteLine("Part of the order was removed, you still have {0} left", changeCustomerOrder.Quantity);
-                                //if part of the order was removed
-                            }
-                        }
-                        else
-                        {
-                            Console.WriteLine("You didn't have that many items to begin with");
-                        }
-                    }
-
-                    else
-                    {
-                        Console.WriteLine("No orders found");
-                    }
-              
-
-            }
-            catch (NullReferenceException)
-            {
-                Console.WriteLine("Bad Format");
-                // System.Console.ReadKey();
-            }
-            }
-            else
-            {
-                Console.WriteLine("No orders found found for customer");
-            }
-            Console.WriteLine("Press any key to continue");
-            Console.ReadLine();
-
-        }
         public void registerNewCustomer()
         {
             CustomerClass ManualCustomerRegistration = new CustomerClass();
@@ -131,55 +56,66 @@ namespace Teddyshop
             while (systemInput != "9")
             {
                 try
-                { 
-                Console.WriteLine("Please folow instructions below");
-                Console.Write("Firstname: ");
-                ManualCustomerRegistration.FirstName = Console.ReadLine();
-                Console.Write("Lastname: ");
-                ManualCustomerRegistration.LastName = Console.ReadLine();
-                Console.Write("Address : ");
-                ManualCustomerRegistration.HomeAddress = Console.ReadLine();
-                Console.Write("ZipCode: ");
-                ManualCustomerRegistration.HomeZipCode = Convert.ToInt32(Console.ReadLine());
-                Console.Write("Social security number : ");
-                ManualCustomerRegistration.SSN = Console.ReadLine();
-                ManualCustomerRegistration.CustomerNo = ManualCustomerRegistration.SSN;
-
-                Console.WriteLine("\nYou have provided the following details, would you like to add the customer?\n");
-
-                Console.Write("Y/N : ");
-                string answer = Console.ReadLine();
-
-                if (answer.ToLower() == "y")
                 {
-                    listCustomers.Add(ManualCustomerRegistration);
+                    Console.WriteLine("Please folow instructions below");
+                    Console.Write("Firstname: ");
+                    ManualCustomerRegistration.FirstName = Console.ReadLine();
+                    Console.Write("Lastname: ");
+                    ManualCustomerRegistration.LastName = Console.ReadLine();
+                    Console.Write("Address : ");
+                    ManualCustomerRegistration.HomeAddress = Console.ReadLine();
+                    Console.Write("ZipCode: ");
+                    ManualCustomerRegistration.HomeZipCode = Convert.ToInt32(Console.ReadLine());
+                    Console.Write("Social security number : ");
+                    ManualCustomerRegistration.SSN = Console.ReadLine();
+                    ManualCustomerRegistration.CustomerNo = ManualCustomerRegistration.SSN;
 
-                    Console.WriteLine("Customer: {0} was added, press any key to go back", ManualCustomerRegistration.FirstName);
-                    Console.ReadLine();
-                    systemInput = "9";
+                    Console.WriteLine("\nYou have provided the following details, would you like to add the customer?\n");
 
+                    Console.Write("Y/N : ");
+                    string answer = Console.ReadLine();
+
+                    if (answer.ToLower() == "y")
+                    {
+                        listCustomers.Add(ManualCustomerRegistration);
+
+                        Console.WriteLine("Customer: {0} was added, press any key to go back", ManualCustomerRegistration.FirstName);
+                        Console.ReadLine();
+                        systemInput = "9";
+
+                    }
+                    else if (answer.ToLower() == "n")
+                    {
+                        Console.WriteLine("Customer registration was dismissed");
+                        systemInput = "9";
+                    }
+                    else
+                    {
+                        Console.WriteLine("Please select either Y or N");
+
+                    }
                 }
-                else if (answer.ToLower() == "n")
+                catch (FormatException)
                 {
-                    Console.WriteLine("Customer registration was dismissed");
-                    systemInput = "9";
+                    Console.WriteLine("Invalid number, please press any key and fill out the form again");
+                    System.Console.ReadKey();
                 }
-                else
-                {
-                    Console.WriteLine("Please select either Y or N");
 
-                }
             }
-            catch (FormatException)
-            {
-                Console.WriteLine("Invalid number, please press any key and fill out the form again");
-                System.Console.ReadKey();
-            }
+
 
         }
 
+        public void customersInSystem()
+        {
+
+            List<CustomerClass>.Enumerator e = listCustomers.GetEnumerator(); //Loop through and send all the vehicles in the garage
+            Write(e);
+            Console.WriteLine("Press any key to return to menu");
+            Console.ReadLine();
 
         }
+      
         public void placeCustomerOrder()
         {
             Order registerOrderForCustomer = new Order();
@@ -190,18 +126,17 @@ namespace Teddyshop
             {
                 Console.WriteLine("Item number: {0} - Name: {1} - Price: {2} - Quantity: {3} ", items.Sku, items.ItemName, items.Price, items.Quantity);
             }
-
+            try
+            {
                 Console.Write("\n\nItem number: ");
                 int userInputsku = Convert.ToInt32(Console.ReadLine());
                 Console.Write("Customer number: ");
                 string userInputCustomer = Console.ReadLine();
-               
+
                 Product productSearch = storage.Find(x => x.Sku == userInputsku && x.Quantity > 0);
                 CustomerClass customerSearch = listCustomers.Find(x => x.CustomerNo == userInputCustomer);
 
-            try
-            {
-                if (customerSearch.CustomerNo != null && Convert.ToInt32(productSearch.Quantity) > 0)
+                if (customerSearch.CustomerNo != null && productSearch.Quantity > 0)
                 {
                     Console.WriteLine("Number of found items: {0}, how many would you like to purchase?", productSearch.Quantity);
                     Console.Write("# ");
@@ -252,7 +187,7 @@ namespace Teddyshop
                     Console.WriteLine("Sorry, nothing matches our database! ");
                 }
             }
-            catch (NullReferenceException)
+            catch (FormatException)
             {
                 Console.WriteLine("Invalid number, please press any key and fill out the form again");
             }
@@ -299,19 +234,58 @@ namespace Teddyshop
             }
 
         }
-        public void initiateProducts()
+        public void removePlacedOrder()
         {
+            Console.WriteLine("Please provide us the following details");
+            Console.Write("Customer number: ");
+            string searchcustomer = Console.ReadLine();
 
-            Product spidermanTeddy = new Product(111, "spiderman teddy", 22, 12);
-            storage.Add(spidermanTeddy);
+            List<Order> viewCustomerOrder = orderList.FindAll(x => x.customerId == searchcustomer);
 
-            Product hulkTeddy = new Product(112, "hulk teddy", 22, 12);
-            storage.Add(hulkTeddy);
 
-            Product batman = new Product(113, "Batman collectable", 220, 4);
-            storage.Add(batman);
+            foreach (Order list in viewCustomerOrder)
+            {
+                Console.WriteLine("Customer with number: {0} have ordered {1} items of {2}", list.customerId, list.Quantity, list.skuOrder);
+            }
 
-            Console.WriteLine("added");
+            Console.WriteLine("\nSelect the item to change your order");
+
+            try
+            {
+                Console.Write("Item number: ");
+                int selectItemNumber = Convert.ToInt32(Console.ReadLine());
+                Order changeCustomerOrder = orderList.Find(x => x.customerId == searchcustomer && x.skuOrder == selectItemNumber);
+                Product removePlacedOrder = storage.Find(x => x.Sku == selectItemNumber);
+                Console.WriteLine("Would you like to cancel the entire order or just change the quantity?, which is now: {0}: ", changeCustomerOrder.Quantity);
+                Console.Write("Quantity to remove from order: ");
+                int selectQuantity = Int32.Parse(Console.ReadLine());
+
+
+
+                if (Convert.ToInt32(selectQuantity) >= removePlacedOrder.Quantity)
+                {
+                    removePlacedOrder.Quantity = removePlacedOrder.Quantity + Convert.ToInt32(selectQuantity);
+                    if (removePlacedOrder.Quantity == 0)
+                    {
+                        viewCustomerOrder.RemoveAll(x => x.customerId == searchcustomer);
+
+                        Console.WriteLine("The whole order was successfully removed");
+                    }
+                    else if (removePlacedOrder.Quantity > 0)
+                    {
+                        Console.WriteLine("Part of the order was removed, you still have {0} left", removePlacedOrder.Quantity);
+                    }
+                }
+                else
+                {
+                    Console.WriteLine("You didn't have that many items to begin with");
+                }
+            }
+            catch (FormatException)
+            {
+                Console.WriteLine("Bad Format");
+            }
+
         }
 
         public void addNewProduct()
@@ -333,7 +307,7 @@ namespace Teddyshop
                     Console.WriteLine("How many products: ");
                     int productQuantityInt = Int32.Parse(Console.ReadLine());
 
-                    Product newProduct = new Product(productSkuInt, productName, productPriceInt, productQuantityInt);
+                    Product newProduct = new Product(productName, productPriceInt, productQuantityInt);
                     storage.Add(newProduct);
 
                     Console.WriteLine("Do you want to add another product - Y/N");
@@ -360,6 +334,7 @@ namespace Teddyshop
             } while (continueAdd);
 
         }
+
         public void changePriceProduct()
         {
 
@@ -390,6 +365,8 @@ namespace Teddyshop
                 Console.WriteLine("Fel Format");
             }
         }
+
+
         public void changeNumberOfProducts()
         {
             foreach (Product item in storage)
