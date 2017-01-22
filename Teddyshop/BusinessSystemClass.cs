@@ -34,7 +34,7 @@ namespace Teddyshop
 
         }
 
-        public void customersInSystem()
+        public void customersInSystem() //Will loop through all the existing customers by calling the method "Write" 
         {
 
             List<CustomerClass>.Enumerator e = listCustomers.GetEnumerator(); 
@@ -43,58 +43,84 @@ namespace Teddyshop
             Console.ReadLine();
 
         }
-        public void removePlacedOrder()
+        public void removePlacedOrder() //will ask the user for a customerid, and then show the current orders for that customer
         {
             Console.WriteLine("Please provide us the following details");
             Console.Write("Customer number: ");
-            string searchcustomer = Console.ReadLine();
+            string searchcustomer = Console.ReadLine(); 
 
-            List<Order> viewCustomerOrder = orderList.FindAll(x => x.customerId == searchcustomer);
+            List<Order> viewCustomerOrder = orderList.FindAll(x => x.customerId == searchcustomer); 
             
-
-            foreach (Order list in viewCustomerOrder)
+            if(viewCustomerOrder.Count > 0)
+            { 
+            foreach (Order list in viewCustomerOrder) //View customer orders
             {
                 Console.WriteLine("Customer with number: {0} have ordered {1} items of {2}", list.customerId, list.Quantity, list.skuOrder);
             }
 
             Console.WriteLine("\nSelect the item to change your order");
 
-            try
-            {
-                Console.Write("Item number: ");
-                int selectItemNumber = Convert.ToInt32(Console.ReadLine());
-                Order changeCustomerOrder = orderList.Find(x => x.customerId == searchcustomer && x.skuOrder == selectItemNumber);
-                Product removePlacedOrder = storage.Find(x => x.Sku == selectItemNumber);
-                Console.WriteLine("Would you like to cancel the entire order or just change the quantity?, which is now: {0}: ", changeCustomerOrder.Quantity);
-                Console.Write("Quantity to remove from order: ");
-                int selectQuantity = Int32.Parse(Console.ReadLine());
-
-
-                if (Convert.ToInt32(selectQuantity) >= removePlacedOrder.Quantity)
+                try
                 {
-                    removePlacedOrder.Quantity = removePlacedOrder.Quantity + Convert.ToInt32(selectQuantity);
-                    if (removePlacedOrder.Quantity == 0)
-                    {
-                        viewCustomerOrder.RemoveAll(x => x.customerId == searchcustomer);
 
-                        Console.WriteLine("The whole order was successfully removed");
-                    }
-                    else if (removePlacedOrder.Quantity > 0)
+                    Console.Write("Item number: ");
+                    int selectItemNumber = Convert.ToInt32(Console.ReadLine());
+                    Order changeCustomerOrder = orderList.Find(x => x.customerId == searchcustomer && x.skuOrder == selectItemNumber);
+                    //Find the first order that matches the users inputed value using "Find"
+                    Product removePlacedOrder = storage.Find(x => x.Sku == selectItemNumber);
+                    if (changeCustomerOrder.Quantity > 0)
                     {
-                        Console.WriteLine("Part of the order was removed, you still have {0} left", removePlacedOrder.Quantity);
+
+
+                        Console.WriteLine("Would you like to cancel the entire order or just change the quantity?, which is now: {0}: ", changeCustomerOrder.Quantity);
+                        Console.Write("Quantity to remove from order: ");
+                        int selectQuantity = Int32.Parse(Console.ReadLine());
+
+
+                        if (Convert.ToInt32(selectQuantity) <= changeCustomerOrder.Quantity)
+                        {
+                            removePlacedOrder.Quantity = removePlacedOrder.Quantity + Convert.ToInt32(selectQuantity);
+                            changeCustomerOrder.Quantity = changeCustomerOrder.Quantity - selectQuantity;
+
+                            //Take back the orders and update the storage list
+                            if (changeCustomerOrder.Quantity == 0)
+                            {
+                                orderList.RemoveAll(x => x.skuOrder == selectItemNumber && x.customerId == searchcustomer);
+                                //if the whole order was removed, remove customer from orderlist
+
+                                Console.WriteLine("The whole order was successfully removed");
+                            }
+                            else if (changeCustomerOrder.Quantity > 0)
+                            {
+                                Console.WriteLine("Part of the order was removed, you still have {0} left", changeCustomerOrder.Quantity);
+                                //if part of the order was removed
+                            }
+                        }
+                        else
+                        {
+                            Console.WriteLine("You didn't have that many items to begin with");
+                        }
                     }
-                }
-                else
-                {
-                    Console.WriteLine("You didn't have that many items to begin with");
-                }
+
+                    else
+                    {
+                        Console.WriteLine("No orders found");
+                    }
+              
+
             }
-            catch (FormatException)
+            catch (NullReferenceException)
             {
                 Console.WriteLine("Bad Format");
                 // System.Console.ReadKey();
             }
-
+            }
+            else
+            {
+                Console.WriteLine("No orders found found for customer");
+            }
+            Console.WriteLine("Press any key to continue");
+            Console.ReadLine();
 
         }
         public void registerNewCustomer()
@@ -164,17 +190,18 @@ namespace Teddyshop
             {
                 Console.WriteLine("Item number: {0} - Name: {1} - Price: {2} - Quantity: {3} ", items.Sku, items.ItemName, items.Price, items.Quantity);
             }
-            try
-            {
+
                 Console.Write("\n\nItem number: ");
                 int userInputsku = Convert.ToInt32(Console.ReadLine());
                 Console.Write("Customer number: ");
                 string userInputCustomer = Console.ReadLine();
-
+               
                 Product productSearch = storage.Find(x => x.Sku == userInputsku && x.Quantity > 0);
                 CustomerClass customerSearch = listCustomers.Find(x => x.CustomerNo == userInputCustomer);
 
-                if (customerSearch.CustomerNo != null && productSearch.Quantity > 0)
+            try
+            {
+                if (customerSearch.CustomerNo != null && Convert.ToInt32(productSearch.Quantity) > 0)
                 {
                     Console.WriteLine("Number of found items: {0}, how many would you like to purchase?", productSearch.Quantity);
                     Console.Write("# ");
@@ -225,7 +252,7 @@ namespace Teddyshop
                     Console.WriteLine("Sorry, nothing matches our database! ");
                 }
             }
-            catch (FormatException)
+            catch (NullReferenceException)
             {
                 Console.WriteLine("Invalid number, please press any key and fill out the form again");
             }
