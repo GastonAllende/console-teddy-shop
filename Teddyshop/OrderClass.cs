@@ -6,22 +6,33 @@ using System.Threading.Tasks;
 
 namespace Teddyshop
 {
-
     public class Order
-        {
-        public int skuOrder { get; set; }
-        public string customerId { get; set; }
-        public int Quantity { get; set; }
+    {
 
-        public void transaction()
+        static int countOrder = 1010;
 
+        List<ProductsInOrder> productsinOrder = new List<ProductsInOrder>();
+        public CustomerClass customerInOrder { get; set; }
+        public int orderNr { get; set; }
+
+        public Order(List<ProductsInOrder> productsToBuy, CustomerClass customer)
         {
-            this.skuOrder = skuOrder;
-            this.customerId = customerId;        
-            this.Quantity = Quantity;
+            countOrder++;
+            this.orderNr = countOrder;
+            customerInOrder = customer;
+
+            foreach (ProductsInOrder item in productsToBuy)
+            {
+                productsinOrder.Add(item);
+            }
+        }
+       
+        public List<ProductsInOrder> GetProductList()
+        {
+            return productsinOrder;
         }
 
     }
-        
- 
 }
+
+

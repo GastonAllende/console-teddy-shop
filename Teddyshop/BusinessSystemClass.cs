@@ -33,16 +33,17 @@ namespace Teddyshop
             }
 
         }
+
         public void initiateProducts()
         {
 
-            Product spidermanTeddy = new Product("spiderman teddy", 22, 12);
+            Product spidermanTeddy = new Product("spiderman teddy", 22, 100);
             storage.Add(spidermanTeddy);
 
-            Product hulkTeddy = new Product("hulk teddy", 22, 12);
+            Product hulkTeddy = new Product("hulk teddy", 22, 100);
             storage.Add(hulkTeddy);
 
-            Product batman = new Product("Batman collectable", 220, 4);
+            Product batman = new Product("Batman collectable", 220, 100);
             storage.Add(batman);
 
             Console.WriteLine("added");
@@ -106,212 +107,372 @@ namespace Teddyshop
 
         }
 
-        public void customersInSystem()
-        {
-
-            List<CustomerClass>.Enumerator e = listCustomers.GetEnumerator(); 
-            Write(e);
-            Console.WriteLine("Press any key to return to menu");
-            Console.ReadLine();
-
-        }
-      
         public void placeCustomerOrder()
         {
-            Order registerOrderForCustomer = new Order();
-            CustomerClass customerOrder = new CustomerClass();
 
-            Console.WriteLine("Currently, we have these items in stock. Write down the items sku number to begin a purchase ");
-            foreach(Product items in storage)
+            List<ProductsInOrder> productsToBuy = new List<ProductsInOrder>();
+            bool truish = true;
+
+            do
             {
-                Console.WriteLine("Item number: {0} - Name: {1} - Price: {2} - Quantity: {3} ", items.Sku, items.ItemName, items.Price, items.Quantity);
-            }
-            try
-            {
-                Console.Write("\n\nItem number: ");
-                int userInputsku = Convert.ToInt32(Console.ReadLine());
-                Console.Write("Customer number: ");
+                Console.WriteLine(" -- Customers -- ");
+                foreach (CustomerClass items in listCustomers)
+                {
+                    Console.WriteLine("Customer number: {0} - Firstname: {1} - Lastname: {2} -", items.CustomerNo, items.FirstName, items.LastName);
+                }
+
+                Console.WriteLine("Choose a customer or write Exit to return to: ");
                 string userInputCustomer = Console.ReadLine();
 
-                Product productSearch = storage.Find(x => x.Sku == userInputsku && x.Quantity > 0);
+                if (userInputCustomer.ToUpper() == "EXIT")
+                {
+                    truish = false;
+                    return;
+                }
+
                 CustomerClass customerSearch = listCustomers.Find(x => x.CustomerNo == userInputCustomer);
 
-                if (customerSearch.CustomerNo != null && productSearch.Quantity > 0)
+                if (customerSearch != null)
                 {
-                    Console.WriteLine("Number of found items: {0}, how many would you like to purchase?", productSearch.Quantity);
-                    Console.Write("# ");
-                    String NoOfPurchaseOrders = Console.ReadLine();
 
-                    if (customerSearch.CustomerNo != null && productSearch.Quantity >= Convert.ToInt32(NoOfPurchaseOrders))
+                    bool addItem = true;
+
+                    do
                     {
+                        try
+                        {
 
-                        Console.WriteLine(" {0} - ItemNo: {1} - Quantity: {2}", customerSearch.FirstName, productSearch.Sku, productSearch.Quantity);
+                            bool haveProduct = false;
+                            Console.WriteLine("Currently, we have these items in stock. Write down the items sku number to begin a purchase ");
+                            foreach (Product items in storage)
+                            {
+                                Console.WriteLine("Item number: {0} - Name: {1} - Price: {2} - Quantity: {3} ", items.Sku, items.ItemName, items.Price, items.Quantity);
+                            }
 
-                        registerOrderForCustomer.customerId = customerSearch.CustomerNo;
-                        registerOrderForCustomer.skuOrder = productSearch.Sku;
-                        registerOrderForCustomer.Quantity = registerOrderForCustomer.Quantity + Convert.ToInt32(NoOfPurchaseOrders);
-                        orderList.Add(registerOrderForCustomer);
-                        productSearch.Quantity = productSearch.Quantity - Convert.ToInt32(NoOfPurchaseOrders);
+                            Console.Write("Choose a product by item number: ");
+                            int userInputsku = Convert.ToInt32(Console.ReadLine());
 
-                        Order orders = orderList.Find(x => x.skuOrder == userInputsku);
+                            Product productSearch = storage.Find(x => x.Sku == userInputsku);
 
-                        Console.WriteLine("Congratulations! your order was successfully processed");
+                            foreach (ProductsInOrder items in productsToBuy)
+                            {
+                                if (items.product.Sku == userInputsku)
+                                {
+                                    Console.WriteLine("You already choosen that product");
+                                    Console.ReadKey();
+                                    haveProduct = true;
+                                }
+                            }
+
+                            if (!haveProduct)
+                            {
+                                
+                                if (productSearch != null)
+                                {
+
+                                    Console.WriteLine("Number of found items: {0}, how many would you like to purchase?", productSearch.Quantity);
+                                    Console.Write("# ");
+                                    int NoOfPurchaseOrders = Convert.ToInt32(Console.ReadLine());
+
+                                    if (productSearch.Quantity >= NoOfPurchaseOrders && !String.IsNullOrEmpty(NoOfPurchaseOrders.ToString()))
+                                    {
+
+                                        ProductsInOrder newProduct = new ProductsInOrder(productSearch, NoOfPurchaseOrders);
+                                        productsToBuy.Add(newProduct);
+                                        productSearch.Quantity = productSearch.Quantity - NoOfPurchaseOrders;
+
+                                        Console.WriteLine("Do you want to add a new product - Y/N");
+                                        string inputYesOrNo = Console.ReadLine();
+
+                                        if (inputYesOrNo.ToUpper() == "Y")
+                                        {
+                                            addItem = true;
+                                        }
+                                        else
+                                        {
+                                            Order order = new Order(productsToBuy, customerSearch);
+                                            orderList.Add(order);
+                                            Console.WriteLine("Congratulations! your order was successfully processed");
+                                            Console.ReadKey();
+
+                                            addItem = false;
+                                            truish = false;
+                                        }
 
 
+                                    }
+                                    else
+                                    {
+                                        Console.WriteLine("Yo have choosen to many items");
+                                        Console.ReadKey();
+                                    }
 
-                    }
-                    else if (productSearch.Quantity < Convert.ToInt32(NoOfPurchaseOrders))
-                    {
-                        Console.WriteLine("We don't have that many {0}", productSearch.ItemName);
 
-                    }
-                    else if (customerSearch.CustomerNo != null)
-                    {
-                        Console.WriteLine("Did not find a customer by the provided id in our system, please register customer first");
-                    }
-                    else
-                    {
-                        Console.WriteLine("Something went wrong, try again");
-                    }
+                                }
+                                else
+                                {
+                                    Console.WriteLine("That item do not exist!");
+                                    Console.ReadKey();
+                                }
+
+                            }
+                            else
+                            {
+                                addItem = true;
+                            }
+                           
+                        }
+                        catch (FormatException)
+                        {
+                            Console.WriteLine("Bad Format");
+                            addItem = true;
+                        }
+                    } while (addItem);
+
                 }
-                else if(customerSearch.CustomerNo == null && productSearch.Quantity > 0)
-                {
-                    Console.WriteLine("No customer found");
+                else {
+                    Console.WriteLine("That customer do not exist!");
+                    Console.ReadKey();
                 }
-                else if(productSearch.Quantity == 0 && customerSearch.CustomerNo != null)
-                {
-                    Console.WriteLine("Out of {0}, please order!", Convert.ToString(productSearch));
-                }
-                else 
-                {
-                    Console.WriteLine("Sorry, nothing matches our database! ");
-                }
-            }
-            catch (FormatException)
-            {
-                Console.WriteLine("Invalid number, please press any key and fill out the form again");
-            }
-            Console.ReadLine();
+
+            } while (truish);
+
         }
+
         public void viewCustomerOrder()
         {
 
-            Console.WriteLine("[1] Search for a customer order");
-            Console.WriteLine("[2] View all orders");
-            Console.WriteLine("[9] Exit");
-            String userViewOrdersInput = Console.ReadLine();
-            while (userViewOrdersInput != "9")
+            Console.WriteLine(" -- Customers -- ");
+            foreach (CustomerClass items in listCustomers)
             {
-                if (userViewOrdersInput == "1")
-                {
-                    Console.Write("Please provide a customerNo: ");
-                    string userCustomerSearchValue = Console.ReadLine();
-                    List<Order> viewCustomerOrder = orderList.FindAll(x => x.customerId == userCustomerSearchValue);
-
-                    foreach (Order list in viewCustomerOrder)
-                    {
-                        Console.WriteLine("Customer with number: {0} have ordered {1} items of {2}", list.customerId, list.Quantity, list.skuOrder);
-                    }
-
-                    Console.WriteLine("Press any key to continue");
-                    Console.ReadLine();
-                    userViewOrdersInput = "9";
-
-                }
-                else if (userViewOrdersInput == "2")
-                {
-                    foreach (Order list in orderList)
-                    {
-                        Console.WriteLine("Customer with number: {0} have ordered {1} items of {2}", list.customerId, list.Quantity, list.skuOrder);
-
-                    }
-                    Console.WriteLine("Press any key to continue");
-                    Console.ReadLine();
-                    userViewOrdersInput = "9";
-
-                }
-
+                Console.WriteLine("Customer number: {0} - Firstname: {1} - Lastname: {2} -", items.CustomerNo, items.FirstName, items.LastName);
             }
 
-        }
-        public void removePlacedOrder() //will ask the user for a customerid, and then show the current orders for that customer
-        {
-            Console.WriteLine("Please provide us the following details");
-            Console.Write("Customer number: ");
-            string searchcustomer = Console.ReadLine();
 
-            List<Order> viewCustomerOrder = orderList.FindAll(x => x.customerId == searchcustomer);
+            Console.Write("Please provide a customerNo: ");
+            string userCustomerSearchValue = Console.ReadLine();
+            Console.WriteLine(userCustomerSearchValue);
 
-            if (viewCustomerOrder.Count > 0)
+
+            List<Order> viewCustomerOrder = orderList.FindAll(x => x.customerInOrder.CustomerNo == userCustomerSearchValue);
+
+
+            if (viewCustomerOrder.Count != 0)
             {
-                foreach (Order list in viewCustomerOrder) //View customer orders
-                {
-                    Console.WriteLine("Customer with number: {0} have ordered {1} items of {2}", list.customerId, list.Quantity, list.skuOrder);
-                }
+                Console.WriteLine("Orders for customer with number:" + userCustomerSearchValue);
 
-                Console.WriteLine("\nSelect the item to change your order");
-
-                try
+                foreach (Order list in viewCustomerOrder)
                 {
 
-                    Console.Write("Item number: ");
-                    int selectItemNumber = Convert.ToInt32(Console.ReadLine());
-                    Order changeCustomerOrder = orderList.Find(x => x.customerId == searchcustomer && x.skuOrder == selectItemNumber);
-                    //Find the first order that matches the users inputed value using "Find"
-                    Product removePlacedOrder = storage.Find(x => x.Sku == selectItemNumber);
-                    if (changeCustomerOrder.Quantity > 0)
+                    Console.WriteLine(" -- Order -- " + list.orderNr);
+                    foreach (ProductsInOrder items in list.GetProductList())
                     {
-
-
-                        Console.WriteLine("Would you like to cancel the entire order or just change the quantity?, which is now: {0}: ", changeCustomerOrder.Quantity);
-                        Console.Write("Quantity to remove from order: ");
-                        int selectQuantity = Int32.Parse(Console.ReadLine());
-
-
-                        if (Convert.ToInt32(selectQuantity) <= changeCustomerOrder.Quantity)
-                        {
-                            removePlacedOrder.Quantity = removePlacedOrder.Quantity + Convert.ToInt32(selectQuantity);
-                            changeCustomerOrder.Quantity = changeCustomerOrder.Quantity - selectQuantity;
-
-                            //Take back the orders and update the storage list
-                            if (changeCustomerOrder.Quantity == 0)
-                            {
-                                orderList.RemoveAll(x => x.skuOrder == selectItemNumber && x.customerId == searchcustomer);
-                                //if the whole order was removed, remove customer from orderlist
-
-                                Console.WriteLine("The whole order was successfully removed");
-                            }
-                            else if (changeCustomerOrder.Quantity > 0)
-                            {
-                                Console.WriteLine("Part of the order was removed, you still have {0} left", changeCustomerOrder.Quantity);
-                                //if part of the order was removed
-                            }
-                        }
-                        else
-                        {
-                            Console.WriteLine("You didn't have that many items to begin with");
-                        }
+                        Console.WriteLine("You have {0} pieces of {1} with sku-nr {2} ", items.productQuantity, items.product.ItemName, items.product.Sku);
                     }
 
-                    else
-                    {
-                        Console.WriteLine("No orders found");
-                    }
-
-
                 }
-                catch (NullReferenceException)
-                {
-                    Console.WriteLine("Bad Format");
-                    // System.Console.ReadKey();
-                }
+
+                Console.ReadKey();
             }
             else
             {
-                Console.WriteLine("No orders found found for customer");
+                Console.WriteLine("That Customer does not exist or does not have orders");
+                Console.ReadKey();
             }
-            Console.WriteLine("Press any key to continue");
-            Console.ReadLine();
+
+        }
+
+        public void changeProductInOrder()
+        {
+            Console.WriteLine(" -- Customers -- ");
+            foreach (CustomerClass items in listCustomers)
+            {
+                Console.WriteLine("Customer number: {0} - Firstname: {1} - Lastname: {2} -", items.CustomerNo, items.FirstName, items.LastName);
+            }
+
+
+            Console.Write("Please provide a customerNo: ");
+            string userCustomerSearchValue = Console.ReadLine();
+            Console.WriteLine(userCustomerSearchValue);
+
+            List<Order> viewCustomerOrder = orderList.FindAll(x => x.customerInOrder.CustomerNo == userCustomerSearchValue);
+
+            if (viewCustomerOrder.Count != 0)
+            {
+                Console.WriteLine("Orders for customer with number:" + userCustomerSearchValue);
+
+                foreach (Order list in viewCustomerOrder)
+                {
+
+                    Console.WriteLine(" -- Order -- " + list.orderNr);
+                    foreach (ProductsInOrder items in list.GetProductList())
+                    {
+                        Console.WriteLine("You have {0} pieces of {1} with sku-nr {2} ", items.productQuantity, items.product.ItemName, items.product.Sku);
+                    }
+
+                }
+
+                Console.WriteLine("Please provide the order-nr of the order you want to change the product: ");
+                Console.WriteLine("Order-nr#: ");
+                int userInputOrderNr = int.Parse(Console.ReadLine());
+
+                Order orderToChange = orderList.Find(x => x.orderNr == userInputOrderNr);
+
+                if (orderToChange != null)
+                {
+                    List<ProductsInOrder> productsInOrder = orderToChange.GetProductList();
+
+                    foreach (ProductsInOrder items in productsInOrder)
+                    {
+                        Console.WriteLine("Product number: {0} - Item name: {1} ", items.product.Sku, items.product.ItemName);
+                        Console.WriteLine("Product quantity: {0}", items.productQuantity);
+
+                    }
+
+                    Console.WriteLine("Wish product to you want to change?");
+                    Console.WriteLine("Product-nr#");
+
+                    try
+                    {
+                        int productSkuNr = int.Parse(Console.ReadLine());
+
+                        ProductsInOrder productSearch = productsInOrder.Find(x => x.product.Sku == productSkuNr);
+
+                        if (productSearch != null)
+                        {
+
+                            Product getProductInStorage = storage.Find(x => x.Sku == productSkuNr);
+                            bool changeQuantity = true;
+
+                            do
+                            {
+                                try
+                                {
+
+                                    Console.WriteLine("New quantity");
+                                    int productAdd = int.Parse(Console.ReadLine());
+
+                                    int totalQuantity = getProductInStorage.Quantity + productSearch.productQuantity;
+
+                                    if (productAdd <= totalQuantity)
+                                    {
+                                        getProductInStorage.Quantity = getProductInStorage.Quantity + productSearch.productQuantity;
+                                        productSearch.productQuantity = productAdd;
+                                        getProductInStorage.Quantity = getProductInStorage.Quantity - productAdd;
+                                        changeQuantity = false;
+
+                                        Console.WriteLine("Changes made to the product-nr {0}", productSearch.product.Sku);
+                                    }
+                                    else
+                                    {
+                                        Console.WriteLine("We dont have that much");
+                                        changeQuantity = true;
+                                    }
+                                }
+                                catch (FormatException)
+                                {
+                                    Console.WriteLine("Bad Format");
+                                    changeQuantity = true;
+                                }
+
+                            } while (changeQuantity);
+                        }
+                        else
+                        {
+                            Console.WriteLine("That product dont exist in the order");
+                        }
+                    }
+                    catch (FormatException)
+                    {
+                        Console.WriteLine("Bad Format");
+                    }
+
+                }
+                else
+                {
+                    Console.WriteLine("That order does not exist");
+                }
+                Console.ReadKey();
+            }
+            else
+            {
+                Console.WriteLine("That Customer does not exist or does not have orders");
+                Console.ReadKey();
+            }
+        }
+
+        public void cancelOrder()
+        {
+            Console.WriteLine(" -- Customers -- ");
+            foreach (CustomerClass items in listCustomers)
+            {
+                Console.WriteLine("Customer number: {0} - Firstname: {1} - Lastname: {2} -", items.CustomerNo, items.FirstName, items.LastName);
+            }
+
+
+            Console.Write("Please provide a customerNo: ");
+            string userCustomerSearchValue = Console.ReadLine();
+            Console.WriteLine(userCustomerSearchValue);
+
+            List<Order> viewCustomerOrder = orderList.FindAll(x => x.customerInOrder.CustomerNo == userCustomerSearchValue);
+
+            if (viewCustomerOrder.Count != 0)
+            {
+                Console.WriteLine("Orders for customer with number: {0}", userCustomerSearchValue);
+
+                foreach (Order list in viewCustomerOrder)
+                {
+
+                    Console.WriteLine(" -- Order -- " + list.orderNr);
+                    foreach (ProductsInOrder items in list.GetProductList())
+                    {
+                        Console.WriteLine("You have {0} pieces of {1} with sku-nr {2} ", items.productQuantity, items.product.ItemName, items.product.Sku);
+                    }
+
+                }
+
+                try
+                {
+                    Console.WriteLine("Please provide the order-nr of the order you want to cancel: ");
+                    Console.WriteLine("#: ");
+                    int userInputOrderNr = int.Parse(Console.ReadLine());
+
+                    Order orderToRemove = orderList.Find(x => x.orderNr == userInputOrderNr);
+
+                    if (orderToRemove != null)
+                    {
+
+                        foreach (ProductsInOrder items in orderToRemove.GetProductList())
+                        {
+                            Product productSearch = storage.Find(x => x.Sku == items.product.Sku);
+                            productSearch.Quantity = productSearch.Quantity + items.productQuantity;
+                        }
+
+                        orderList.Remove(orderToRemove);
+                        Console.WriteLine("The order was removed");
+
+                    }
+                    else
+                    {
+                        Console.WriteLine("No order with that number");
+                    }
+
+
+
+                }
+                catch (FormatException)
+                {
+                    Console.WriteLine("Bad Format");
+                    Console.ReadKey();
+                }
+
+                Console.ReadKey();
+            }
+            else
+            {
+                Console.WriteLine("That customer has no orders");
+                Console.ReadKey();
+            }
 
         }
 
@@ -324,9 +485,6 @@ namespace Teddyshop
                 {
                     Console.WriteLine("Name of the product: ");
                     string productName = Console.ReadLine();
-
-                    Console.WriteLine("Sku of the product: ");
-                    int productSkuInt = Int32.Parse(Console.ReadLine());
 
                     Console.WriteLine("Price of the product: ");
                     int productPriceInt = Int32.Parse(Console.ReadLine());
@@ -342,7 +500,7 @@ namespace Teddyshop
 
                     if (answer.ToUpper() == "Y")
                     {
-                        continueAdd = true;
+                        continueAdd = true; // Continue to add if the answer is yes = Y
                     }
                     else if (answer.ToUpper() == "N")
                     {
@@ -355,7 +513,6 @@ namespace Teddyshop
                 {
                     Console.WriteLine("Bad Format try again");
                     continueAdd = true;
-                    // System.Console.ReadKey();
                 }
 
             } while (continueAdd);
@@ -364,7 +521,7 @@ namespace Teddyshop
 
         public void changePriceProduct()
         {
-
+            // show all the product in storage
             foreach (Product item in storage)
             {
                 Console.WriteLine(item.ToString());
@@ -374,28 +531,37 @@ namespace Teddyshop
             {
                 Console.WriteLine("Write sku-nr of the product you want to change the price");
                 int skuInput = Int32.Parse(Console.ReadLine());
-                Console.WriteLine("Write the new price");
-                int newPrice = Int32.Parse(Console.ReadLine());
 
+                Product ProductToChange = storage.Find(x => x.Sku == skuInput); // Find the product
 
-                foreach (Product item in storage)
+                if (ProductToChange != null) // does the product exist if not dont to nothing
                 {
-                    if (item.Sku == skuInput)
-                    {
-                        item.Price = newPrice;
-                        Console.WriteLine("Change the price of " + item.ItemName + " With SKU-nr " + item.Sku);
-                    }
+
+                    Console.WriteLine("Write the new price");
+                    int newPrice = Int32.Parse(Console.ReadLine());
+
+                    ProductToChange.Price = newPrice;
+                    Console.WriteLine("Change the price of {0}  with SKU-nr {1}", ProductToChange.ItemName, ProductToChange.Sku);
+                    Console.ReadKey();
+
                 }
+                else
+                {
+                    Console.WriteLine("That product do not exist");
+                    Console.ReadKey();
+                }
+
             }
             catch (FormatException)
             {
-                Console.WriteLine("Fel Format");
+                Console.WriteLine("Bad Format");
+                Console.ReadKey();
             }
         }
 
-
         public void changeNumberOfProducts()
         {
+            // show all the product in storage
             foreach (Product item in storage)
             {
                 Console.WriteLine(item.ToString());
@@ -406,47 +572,36 @@ namespace Teddyshop
 
                 Console.WriteLine("Write sku-nr of the product you want to change the quantity");
                 int skuInput = Int32.Parse(Console.ReadLine());
-                Console.WriteLine("Write the quantity for that product");
-                int newQuantity = Int32.Parse(Console.ReadLine());
 
-                foreach (Product item in storage)
+                Product ProductToChange = storage.Find(x => x.Sku == skuInput); // Find the product
+
+
+                if (ProductToChange != null) // If the product not exist dont to nothing
                 {
-                    if (item.Sku == skuInput)
-                    {
-                        item.Quantity = newQuantity;
-                        Console.WriteLine("Change the quantity of " + item.ItemName + " With SKU-nr " + item.Sku);
-                    }
+
+                    Console.WriteLine("The product ({0}){1} has a quantity of: {2}", ProductToChange.Sku, ProductToChange.ItemName, ProductToChange.Quantity);
+                    Console.WriteLine("Write the new quantity for that product");
+                    int newQuantity = Int32.Parse(Console.ReadLine());
+
+                    ProductToChange.Quantity = newQuantity;
+
+                    Console.WriteLine("Change the quantity of {0} with SKU-nr {1}", ProductToChange.ItemName, ProductToChange.Sku);
+                    Console.ReadKey();
+
                 }
+                else
+                {
+                    Console.WriteLine("That product do not exist");
+                    Console.ReadKey();
+                }
+
             }
             catch (FormatException)
             {
-                Console.WriteLine("Fel Format");
+                Console.WriteLine("Bad Format");
+                Console.ReadKey();
             }
         }
 
-
-        static void Write(IEnumerator<CustomerClass> e)
-        {
-            while (e.MoveNext()) 
-            {
-                CustomerClass value = e.Current;
-                Console.WriteLine(value.FirstName);
-                Console.WriteLine(value.LastName);
-                Console.WriteLine(value.CustomerNo);
-                Console.WriteLine(value.HomeAddress);
-            }
-
-
-        }
-
-        static void WriteProduct(IEnumerator<Product> e)
-        {
-            while (e.MoveNext()) 
-            {
-                Product value = e.Current;
-                Console.WriteLine(value.ItemName);
-                Console.WriteLine(value.Quantity);
-            }
-        }
     }
 }

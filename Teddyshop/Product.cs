@@ -6,9 +6,8 @@ using System.Threading.Tasks;
 
 namespace Teddyshop
 {
-     public  class Product
+    public class Product
     {
-
         static int countProduct = 100;
 
         //  Properties             
@@ -35,11 +34,11 @@ namespace Teddyshop
             this.Quantity = quantity;
         }
 
-          public override string ToString()
-            {
-                return "Product Sku: " + Sku + ", Name: " + ItemName + " Product price: " + Price + ", Quantity : " + Quantity;
-            }
-            
+        public override string ToString()
+        {
+            return "Product Sku: " + Sku + ", Name: " + ItemName + " Product price: " + Price + ", Quantity : " + Quantity;
+        }
+
     }
 
 }
