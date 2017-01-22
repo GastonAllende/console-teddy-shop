@@ -154,21 +154,23 @@ namespace Teddyshop
 
                             Product productSearch = storage.Find(x => x.Sku == userInputsku);
 
-                            foreach (ProductsInOrder items in productsToBuy)
-                            {
-                                if (items.product.Sku == userInputsku)
-                                {
-                                    Console.WriteLine("You already choosen that product");
-                                    Console.ReadKey();
-                                    haveProduct = true;
-                                }
-                            }
-
-                            if (!haveProduct)
+                            if (productSearch != null)
                             {
                                 
-                                if (productSearch != null)
+
+                                foreach (ProductsInOrder items in productsToBuy)
                                 {
+                                    if (items.product.Sku == userInputsku)
+                                    {
+                                        Console.WriteLine("You already choosen that product");
+                                        Console.ReadKey();
+                                        haveProduct = true;
+                                    }
+                                }
+
+                                if (!haveProduct)
+                                {
+                                    
 
                                     Console.WriteLine("Number of found items: {0}, how many would you like to purchase?", productSearch.Quantity);
                                     Console.Write("# ");
@@ -208,19 +210,30 @@ namespace Teddyshop
                                     }
 
 
-                                }
-                                else
+                                }else
                                 {
-                                    Console.WriteLine("That item do not exist!");
-                                    Console.ReadKey();
-                                }
+                                    Console.WriteLine("If you want to end and add order write END");
+                                    string AddOrderEnd = Console.ReadLine();
+                                    if(AddOrderEnd.ToUpper() == "END")
+                                    {
+                                        Order order = new Order(productsToBuy, customerSearch);
+                                        orderList.Add(order);
+                                        Console.WriteLine("Congratulations! your order was successfully processed");
+                                        Console.ReadKey();
 
+                                        addItem = false;
+                                        truish = false;
+
+                                    }
+                                }
+                                
                             }
                             else
                             {
-                                addItem = true;
+                                Console.WriteLine("That item do not exist!");
+                                Console.ReadKey();
                             }
-                           
+
                         }
                         catch (FormatException)
                         {
