@@ -8,6 +8,9 @@ namespace Teddyshop
 {
      public  class Product
     {
+
+        static int countProduct = 100;
+
         //  Properties             
         public int Sku { get; set; }
         public string ItemName { get; set; }
@@ -23,9 +26,10 @@ namespace Teddyshop
             
         */
 
-        public Product(int sku, string itemName, int price, int quantity)
+        public Product(string itemName, int price, int quantity)
         {
-            this.Sku = sku;
+            countProduct++;
+            this.Sku = countProduct;
             this.ItemName = itemName;
             this.Price = price;
             this.Quantity = quantity;

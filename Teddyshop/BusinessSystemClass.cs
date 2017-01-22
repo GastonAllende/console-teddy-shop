@@ -36,13 +36,13 @@ namespace Teddyshop
         public void initiateProducts()
         {
 
-            Product spidermanTeddy = new Product(111, "spiderman teddy", 22, 12);
+            Product spidermanTeddy = new Product("spiderman teddy", 22, 12);
             storage.Add(spidermanTeddy);
 
-            Product hulkTeddy = new Product(112, "hulk teddy", 22, 12);
+            Product hulkTeddy = new Product("hulk teddy", 22, 12);
             storage.Add(hulkTeddy);
 
-            Product batman = new Product(113, "Batman collectable", 220, 4);
+            Product batman = new Product("Batman collectable", 220, 4);
             storage.Add(batman);
 
             Console.WriteLine("added");
@@ -307,7 +307,7 @@ namespace Teddyshop
                     Console.WriteLine("How many products: ");
                     int productQuantityInt = Int32.Parse(Console.ReadLine());
 
-                    Product newProduct = new Product(productSkuInt, productName, productPriceInt, productQuantityInt);
+                    Product newProduct = new Product(productName, productPriceInt, productQuantityInt);
                     storage.Add(newProduct);
 
                     Console.WriteLine("Do you want to add another product - Y/N");
