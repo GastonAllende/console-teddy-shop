@@ -109,7 +109,7 @@ namespace Teddyshop
         public void customersInSystem()
         {
 
-            List<CustomerClass>.Enumerator e = listCustomers.GetEnumerator(); //Loop through and send all the vehicles in the garage
+            List<CustomerClass>.Enumerator e = listCustomers.GetEnumerator(); 
             Write(e);
             Console.WriteLine("Press any key to return to menu");
             Console.ReadLine();
